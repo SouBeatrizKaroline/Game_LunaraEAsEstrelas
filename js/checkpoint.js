@@ -166,29 +166,18 @@ class CheckpointManager {
     }
   }
 
-  respawnPlayer(player, particles, sound, onFadeDone) {
-    const cp = this.activeCheckpoint || this.checkpoints[0];
+  respawnPlayer(player, particles, sound) {
+    player.isRespawning = true;
+    player.respawnTime = .4;
+    player.vx = player.vy = 0;
+    player.support = null;
+    player.buffer = player.coyote = 0;
+    window.gameInstance?.clearInput();
     sound.playRespawn();
-
-    const curtain = document.getElementById('fade-curtain');
-    if (curtain) curtain.classList.add('fade-in');
-
-    setTimeout(() => {
-      player.x = cp.spawnX;
-      player.y = cp.spawnY;
-      player.vx = 0;
-      player.vy = 0;
-      player.isGrounded = true;
-      player.isRespawning = false;
-
-      particles.spawnRespawnDust(player.x + player.width * 0.5, player.y + player.height * 0.5);
-
-      setTimeout(() => {
-        if (curtain) curtain.classList.remove('fade-in');
-        if (onFadeDone) onFadeDone();
-      }, 150);
-    }, 280);
+    window.gameInstance?.camera.shake(5);
+    document.getElementById('fade-curtain')?.classList.add('fade-in');
   }
 }
 
 window.CheckpointManager = CheckpointManager;
+

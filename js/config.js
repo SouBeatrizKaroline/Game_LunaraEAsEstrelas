@@ -4,18 +4,18 @@
  */
 const CONFIG = {
   VIEWPORT: {
-    WIDTH: 1280,
-    HEIGHT: 720
+    WIDTH: 960,
+    HEIGHT: 540
   },
   WORLD: {
-    WIDTH: 7200,
+    WIDTH: 2400,
     HEIGHT: 1100,
     GROUND_Y: 820,
     DEATH_PIT_Y: 1040
   },
   PLAYER: {
-    WIDTH: 44,
-    HEIGHT: 44,
+    WIDTH: 38,
+    HEIGHT: 48,
     DRAW_SCALE: 1.0,
     WALK_SPEED: 260,
     RUN_SPEED: 370,
@@ -46,16 +46,8 @@ const CONFIG = {
     WATER_TEAL: 'rgba(50, 181, 161, 0.65)',
     WATER_GLOW: 'rgba(110, 235, 215, 0.4)'
   },
-  ZONES: [
-    { id: 'start', name: 'Início da Floresta', startX: 0, endX: 1150 },
-    { id: 'mushrooms', name: 'Bosque dos Cogumelos', startX: 1150, endX: 2450 },
-    { id: 'bridge', name: 'Ponte Antiga', startX: 2450, endX: 3650 },
-    { id: 'stream', name: 'Riacho Encantado', startX: 3650, endX: 4850 },
-    { id: 'glade', name: 'Clareira Mística', startX: 4850, endX: 5950 },
-    { id: 'tree', name: 'Árvore Ancestral', startX: 5950, endX: 7200 }
-  ],
-  TOTAL_MAIN_STARS: 20,
-  TOTAL_SECRET_STARS: 3,
+  TOTAL_MAIN_STARS: 30,
+  TOTAL_SECRET_STARS: 6,
   SETTINGS_DEFAULT: {
     musicVolume: 0.70,
     sfxVolume: 0.85,
@@ -67,3 +59,4 @@ const CONFIG = {
 };
 
 window.CONFIG = CONFIG;
+

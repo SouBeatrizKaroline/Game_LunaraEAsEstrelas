@@ -1,128 +1,76 @@
-# Lunara: As Estrelas Perdidas
+# Lunara · As Estrelas Perdidas
 
-> *"The forest remembers its light."*
+Uma aventura de plataforma em seis capítulos, feita com HTML5 Canvas e JavaScript. O jogo funciona sem instalação, compilação, fontes remotas ou arquivos de áudio externos.
 
-**Lunara: As Estrelas Perdidas** é um jogo web 2D poético, aconchegante e jogável diretamente no navegador, desenvolvido em HTML5 Canvas e JavaScript modular, sem dependências externas.
+## A jornada
 
-O projeto foi construído seguindo fielmente a direção de arte e o conceito visual da protagonista **Lunara**: uma menina-gata com olhos dourados cintilantes, capa azul esvoaçante e poderes estelares despertados pela coleta de estrelas.
+Lunara encontra no seu pingente a última semente da guardiã da floresta. Para despertar a Árvore Ancestral, precisa reconstruir uma constelação espalhada por seis lugares. As memórias violetas revelam uma segunda conclusão para a história.
 
----
+| Capítulo | Lugar | Desafio |
+| --- | --- | --- |
+| 1 — O último brilho | Início da Floresta | Movimento e saltos de altura variável |
+| 2 — O bosque que sonha | Bosque dos Cogumelos | Impulsos automáticos e caminhos nas copas |
+| 3 — Entre duas margens | Ponte Antiga | Travessias e exploração abaixo da ponte |
+| 4 — A canção do riacho | Riacho Encantado | Saltos entre pedras e retorno ao cair na água |
+| 5 — Memórias de pedra | Clareira Mística | Escadarias e plataformas em movimento |
+| 6 — De volta ao firmamento | Árvore Ancestral | Combinação das mecânicas e encerramento |
 
-## 🌟 1. Conceito e História
+Cada fase tem **cinco fragmentos obrigatórios**, **uma memória opcional**, dois checkpoints e um portal. As cinco luzes sobre o portal mostram o progresso. Reunir os fragmentos e atravessar o portal desbloqueia o próximo capítulo. Todas as rotas obrigatórias e memórias são alcançáveis sem poderes. Cair preserva as coletas; não há vidas ou game over.
 
-As estrelas desapareceram do céu noturno e seus fragmentos caíram sobre uma floresta encantada, mergulhando-a em sombras e silêncio. No papel de Lunara, sua missão é explorar a floresta, recuperar os 20 fragmentos principais de estrelas e as 3 estrelas secretas perdidas, devolvendo progressivamente a luz, a vida e a magia ao mundo até o despertar da lendária **Árvore Ancestral**.
+A narrativa e as instruções ficam nas telas de capítulo, ajuda e pausa. Durante a ação, aparecem apenas ícones, contadores e controles.
 
----
+## Jogar
 
-## 🎮 2. Gameplay e Mecânicas
+Abra `index.html` em um navegador moderno. Para uma origem estável de salvamento, também é possível servir a pasta:
 
-### Poderes estelares
-Lunara desbloqueia e usa poderes ao reunir estrelas. Quando um poder estiver pronto, pressione `E`:
-- **5 estrelas — Salto Estelar:** impulso vertical maior.
-- **10 estrelas — Passo Estelar:** velocidade aumentada e um segundo salto no ar durante a ativação.
-- **15 estrelas — Forma Estelar:** velocidade aumentada, segundo salto e proteção contra quedas por alguns segundos.
+```sh
+python -m http.server 8000
+```
 
-O HUD mostra o nível e o estado do poder. Cada poder precisa ser carregado novamente pela próxima conquista de estrelas.
-
-### Movimentação Refinada & Platforming Polido
-- **Aceleração e desaceleração suaves:** sem deslizamentos bruscos; controles responsivos e naturais.
-- **Coyote Time (130ms):** janela de tolerância que permite pular mesmo logo após sair de uma beirada.
-- **Jump Buffer (130ms):** armazena o comando de pulo instantes antes de tocar o chão para um pulo contínuo e sem frustração.
-- **Pulo Variável:** a altura do salto é proporcional ao tempo em que a tecla/botão é pressionado.
-- **Cogumelos Elásticos:** grandes cogumelos bioluminescentes funcionam como trampolins com dispersão de esporos brilhantes.
-- **Checkpoints Rúnicos:** monólitos de pedra ancestrais que se iluminam ao toque e salvam o progresso com segurança.
-- **Respawn Gentil (Sem Game Over):** cair no riacho ou em fendas dissolve Lunara em poeira estelar cintilante e a transporta de volta ao último monólito ativado, sem penalidades de vida.
+Acesse `http://localhost:8000`.
 
 ### Controles
-- **Desktop:**
-  - `A` ou `←` : Mover para a esquerda
-  - `D` ou `→` : Mover para a direita
-  - `W` / `↑` / `Espaço` : Pular (segure para altura máxima)
-  - `Shift` : Correr
-- **Dispositivos Móveis e Tablets:**
-  - Botões touch translúcidos discretos no canto inferior esquerdo (`←` e `→`) e botão de salto no canto inferior direito (`↑`).
 
----
+- **A/D ou ←/→:** andar.
+- **W, ↑ ou Espaço:** pular; segure para saltar mais alto.
+- **Shift:** correr.
+- **E ou ✦:** impulso estelar, desbloqueado após cinco fragmentos acumulados. Recarrega em seis segundos. A partir de dez fragmentos, permite um segundo salto no ar durante os três segundos de ativação.
+- **Esc ou ⏸:** pausar.
+- **Celular:** setas de movimento e botão ↑. Os controles também podem ser ativados nas configurações.
 
-## 🌲 3. Mapa da Fase e Zonas
+O jogo pausa ao perder o foco ou trocar de aba. O retorno de uma queda também fica congelado durante a pausa.
 
-A jornada se desenvolve em uma fase única, horizontal e totalmente explorável em ambas as direções:
+## Progresso e acessibilidade
 
-1. **Início da Floresta (`x: 0 – 1150`):** Colinas suaves de musgo e pedras ancestrais para introdução aos saltos.
-2. **Bosque dos Cogumelos (`x: 1150 – 2450`):** Cogumelos gigantes elásticos, copas altas e caminhos verticais.
-   - *💎 Estrela Secreta 1:* Escondida no topo da copa dos cogumelos.
-3. **Ponte Antiga (`x: 2450 – 3650`):** Grande ponte pênsil de madeira sobre um despenhadeiro com lanternas douradas.
-   - *💎 Estrela Secreta 2:* Oculta nos arcos de pedra sob a ponte.
-4. **Riacho Encantado (`x: 3650 – 4850`):** Águas correntes, cascatas cintilantes e pedras de apoio sobre a correnteza.
-5. **Clareira Mística (`x: 4850 – 5950`):** Ruínas místicas tomadas por flores e arcos rúnicos.
-   - *💎 Estrela Secreta 3:* Guardada na fenda superior do arco em ruínas.
-6. **Árvore Ancestral (`x: 5950 – 7200`):** O santuário sagrado final onde Lunara restaura a constelação perdida.
+O progresso é salvo automaticamente neste navegador, por fase: coletas, checkpoint, capítulos desbloqueados e conclusão. O menu permite continuar, revisitar capítulos e recomeçar com confirmação. Recomeçar mantém as preferências. Não existe sincronização entre dispositivos ou navegadores. Se o armazenamento estiver bloqueado, o jogo continua na sessão e avisa na pausa.
 
----
+As configurações incluem volumes independentes, silenciar áudio, redução de movimento, tremor de tela, densidade de partículas, destaque de fragmentos e controles na tela. Menus aceitam teclado, mostram foco e mantêm a navegação dentro da tela aberta. Reduzir movimento desativa animações decorativas; as plataformas móveis continuam funcionando por fazerem parte do desafio.
 
-## ✨ 4. A Floresta se Transforma (Mecânica Central)
+## Desenvolvimento e testes
 
-O ambiente reage dinamicamente à porcentagem de estrelas recuperadas:
+Node.js 22 ou superior é suficiente para os testes de física:
 
-- **0%:** Floresta escura e silenciosa, sombras azuis profundas, pouquíssimos vagalumes, céu despido de estrelas.
-- **25%:** Cogumelos começam a irradiar bioluminescência ciano e magenta; nuvens de vagalumes surgem na vegetação.
-- **50%:** Flores se abrem, riachos ganham reflexos cintilantes e as primeiras estrelas retornam ao céu noturno.
-- **75%:** A floresta ganha tons vibrantes de lilás, lavanda e dourado; a brisa movimenta as folhas e constelações surgem no horizonte.
-- **100%:** A floresta floresce plenamente. A **Árvore Ancestral** desperta com seiva dourada, pétalas celestiais e uma espiral estelar que reacende o firmamento.
-
----
-
-## 🎶 5. Motor de Áudio Procedural (Web Audio API)
-
-O jogo utiliza um sintetizador procedural integrado via Web Audio API, dispensando arquivos de áudio externos e garantindo zero falhas de carregamento:
-- **Trilha Sonora Ambiente:** Acordes flutuantes em escala pentatônica com filtros aconchegantes e arpeggios estelares.
-- **SFX:** Passos macios, pulos com curva harmônica, sinos celestiais na coleta de estrelas, acorde ressonante nas estrelas secretas, tigela tibetana rúnica nos checkpoints e fanfarra cósmica na vitória.
-
----
-
-## ♿ 6. Acessibilidade e Configurações
-
-Acessíveis a qualquer momento através do menu ou do botão de engrenagem (`⚙️`):
-- Controle independente de volume: Música e Efeitos Sonoros (0% a 100%).
-- **Tremor de Tela (Screen Shake):** Ativar ou desativar.
-- **Reduzir Movimento:** Desativa tremores e suaviza efeitos para maior conforto visual.
-- **Densidade de Partículas:** Configuração em três níveis (Baixa, Média, Alta).
-- **Alto Contraste de Colecionáveis:** Adiciona anéis de sinalização pulsantes aos fragmentos de estrela.
-
----
-
-## 📂 7. Estrutura Modular da Arquitetura
-
-```
-LunaraEAsEstrelas_OJogo/
-├── index.html          # Ponto de entrada, viewport canvas, HUD e overlays
-├── css/
-│   └── style.css       # Estilização visual, paleta aconchegante e controles touch
-├── js/
-│   ├── config.js       # Constantes globais, dimensões, física e cores
-│   ├── audio.js        # Motor de áudio procedural (Web Audio API)
-│   ├── camera.js       # Câmera com lerp, screen shake e modo cutscene
-│   ├── particles.js    # Vagalumes, explosões estelares, esporos e textos flutuantes
-│   ├── collectibles.js # Fragmentos principais, estrelas secretas e atração magnética
-│   ├── checkpoint.js   # Monólitos rúnicos, ativação e respawn gracioso
-│   ├── player.js       # Lunara: máquina de estados, física, colisões e renderizador
-│   ├── level.js        # Plataformas, cogumelos elásticos, água e cenários
-│   ├── world.js        # Parallax multicamadas e transformação da floresta (0% a 100%)
-│   ├── ui.js           # Gerenciador de HUD, modais, acessibilidade e touch
-│   └── game.js         # Loop principal, compositor de iluminação e máquina de estados
-└── README.md           # Documentação completa do projeto
+```sh
+npm test
 ```
 
----
+Para a verificação de navegador:
 
-## 🚀 8. Como Executar
+```sh
+npm install
+npx playwright install chromium
+npm run test:browser
+```
 
-Por ser uma aplicação web nativa sem dependências de compilação:
+É possível usar um navegador Chromium já instalado definindo `BROWSER_EXECUTABLE` com o caminho do executável. O teste de navegador inicia e encerra seu próprio servidor local.
 
-1. Abra diretamente o arquivo `index.html` em qualquer navegador moderno (Chrome, Firefox, Safari, Edge); ou
-2. Execute um servidor local simples:
-   ```bash
-   # Usando Python 3
-   python3 -m http.server 8000
-   ```
-   E acesse `http://localhost:8000` no seu navegador.
+- `tests/physics.cjs`: simula trajetórias com a física real, sem poderes, para verificar acesso a fragmentos, memórias e saídas, além das regressões de salto, colisão, cogumelos e água.
+- `tests/browser.cjs`: valida menus, controles, pausa, salvamento, reinício, seis transições e dois finais, em desktop e emulação móvel. Para testar rapidamente as transições, posiciona a personagem junto aos itens; a geometria é validada separadamente pela simulação.
+- `docs/QA.md`: resultados e limites da validação.
+- GitHub Actions executa as duas suítes a cada alteração na `main`.
+
+## Arquivos
+
+`js/campaign.js` reúne narrativa, geometria, portais, salvamento e detalhes vetoriais dos seis capítulos. `js/game.js` controla os estados e a simulação fixa de 120 passos por segundo. `js/player.js` reúne física e desenho animado de Lunara. Os demais módulos cuidam de áudio, câmera, colecionáveis, checkpoints, partículas, cenários e interface.
+
+Criação de **SouBeatrizKaroline**.

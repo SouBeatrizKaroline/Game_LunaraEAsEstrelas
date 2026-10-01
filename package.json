@@ -1,0 +1,13 @@
+{
+  "name": "lunara-as-estrelas-perdidas",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Uma campanha de plataforma em seis capítulos para reconstruir uma constelação.",
+  "scripts": {
+    "test": "node tests/physics.cjs",
+    "test:browser": "node tests/browser.cjs"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1"
+  }
+}

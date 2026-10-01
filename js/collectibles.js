@@ -27,25 +27,25 @@ class StarCollectible {
 
   update(dt, player, particles, sound, onCollectCallback) {
     if (this.collected) return;
-    this.phase += dt * 3.0;
+    this.phase += window.gameSettings?.reduceMotion ? 0 : dt * 3.0;
 
     if (this.isFlyingToPlayer) {
       this.flyTimer += dt;
       this.spinSpeed = 16.0;
-      this.spin += dt * this.spinSpeed;
+      this.spin += window.gameSettings?.reduceMotion ? 0 : dt * this.spinSpeed;
 
       const targetX = player.x + player.width * 0.5;
       const targetY = player.y + 20;
 
       const dx = targetX - this.x;
       const dy = targetY - this.y;
-      const dist = Math.hypot(dx, dy);
+      const dist = Math.max(.001, Math.hypot(dx, dy));
 
       const speed = 750 * (0.3 + this.flyTimer * 2.5);
-      this.x += (dx / dist) * speed * dt;
-      this.y += (dy / dist) * speed * dt;
+      this.x += (dx / dist) * Math.min(dist, speed * dt);
+      this.y += (dy / dist) * Math.min(dist, speed * dt);
 
-      if (Math.random() < 0.6) {
+      if (!window.gameSettings?.reduceMotion && Math.random() < (window.gameSettings?.particles === 'low' ? .05 : .25)) {
         particles.particles.push({
           x: this.x,
           y: this.y,
@@ -73,7 +73,7 @@ class StarCollectible {
     }
 
     this.y = this.baseY + Math.sin(this.phase) * 6;
-    this.spin += dt * this.spinSpeed;
+    this.spin += window.gameSettings?.reduceMotion ? 0 : dt * this.spinSpeed;
 
     const px = player.x + player.width * 0.5;
     const py = player.y + player.height * 0.5;
@@ -223,3 +223,4 @@ class CollectiblesManager {
 }
 
 window.CollectiblesManager = CollectiblesManager;
+

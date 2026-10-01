@@ -1,232 +1,41 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Lunara: As Estrelas Perdidas</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1029"><meta name="description" content="Uma jornada de seis capítulos para devolver as estrelas ao céu.">
+<title>Lunara · As Estrelas Perdidas</title><link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <div id="game-container">
-    <canvas id="gameCanvas"></canvas>
-
-    <!-- In-Game HUD -->
-    <div id="hud" class="hud-overlay hidden">
-      <div class="hud-stars">
-        <div class="hud-pill main-stars-pill" title="Fragmentos de Estrela">
-          <svg class="hud-icon star-icon" viewBox="0 0 24 24">
-            <path d="M12 2l2.9 6.6 7.1.6-5.3 4.8 1.6 7-6.3-3.7-6.3 3.7 1.6-7-5.3-4.8 7.1-.6z" fill="#ffd15c"/>
-          </svg>
-          <span id="star-count-text">00 / 20</span>
-        </div>
-        <div class="hud-pill secret-stars-pill" title="Estrelas Secretas">
-          <svg class="hud-icon diamond-icon" viewBox="0 0 24 24">
-            <path d="M12 2L3 9l9 13 9-13-9-7z" fill="#d38fff"/>
-          </svg>
-          <span id="secret-count-text">0 / 3</span>
-        </div>
-      </div>
-
-      <div class="hud-controls">
-        <div id="power-status" class="hud-pill" aria-live="polite">Poder 0/3</div>
-        <button id="btn-sound-toggle" class="hud-btn" aria-label="Alternar som">
-          <span class="icon">🔊</span>
-        </button>
-        <button id="btn-settings-toggle" class="hud-btn" aria-label="Configurações">
-          <span class="icon">⚙️</span>
-        </button>
-      </div>
-
-      <!-- Quick zone banner notification -->
-      <div id="zone-banner" class="zone-banner">
-        <span id="zone-banner-text">Início da Floresta</span>
-      </div>
-    </div>
-
-    <!-- Mobile Touch Controls -->
-    <div id="touch-controls" class="touch-controls-container hidden">
-      <div class="touch-group touch-dpad">
-        <button id="btn-touch-left" class="touch-btn" aria-label="Mover para esquerda">
-          <svg viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
-        </button>
-        <button id="btn-touch-right" class="touch-btn" aria-label="Mover para direita">
-          <svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>
-        </button>
-      </div>
-      <div class="touch-group touch-actions">
-        <button id="btn-touch-jump" class="touch-btn touch-btn-jump" aria-label="Pular">
-          <svg viewBox="0 0 24 24"><path d="M12 5l-7 7h4v7h6v-7h4z" fill="currentColor"/></svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- Title Screen -->
-    <div id="title-screen" class="screen-overlay active">
-      <div class="stars-bg-effects"></div>
-      <div class="title-content">
-        <div class="title-logo-wrapper">
-          <div class="glowing-star-aura"></div>
-          <h1 class="game-title">Lunara</h1>
-          <h2 class="game-subtitle">As Estrelas Perdidas</h2>
-          <p class="tagline">Uma pequena gata. Uma floresta sem estrelas. E uma jornada para devolver a luz ao mundo.</p>
-        </div>
-
-        <div class="title-actions">
-          <button id="btn-play" class="btn-primary">
-            <span class="btn-glow"></span>
-            <span class="btn-text">Começar Jornada</span>
-          </button>
-          <button id="btn-open-settings" class="btn-secondary">
-            <span class="btn-text">Configurações</span>
-          </button>
-          <button id="btn-open-story" class="btn-tertiary">
-            <span class="btn-text">Como Jogar</span>
-          </button>
-        </div>
-
-        <div class="title-footer">
-          <p class="desktop-hint">Controles: [A] / [D] ou [←] / [→] para andar • [W] / [↑] / [Espaço] para pular</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Story / Tutorial Modal -->
-    <div id="story-modal" class="modal-overlay hidden">
-      <div class="modal-card">
-        <h3 class="modal-title">Como Jogar</h3>
-        <div class="modal-body">
-          <p>As estrelas caíram do céu noturno e se perderam na floresta encantada. Conduza <strong>Lunara</strong> para resgatar todos os fragmentos celestiais.</p>
-          <div class="instruction-grid">
-            <div class="instruction-item">
-              <span class="key-badge">A / D ou ← / →</span>
-              <span>Correr suavemente</span>
-            </div>
-            <div class="instruction-item">
-              <span class="key-badge">W / ↑ / Espaço</span>
-              <span>Pulo variável (segure para pular mais alto)</span>
-            </div>
-            <div class="instruction-item">
-              <span class="key-badge">⭐ 20 Estrelas</span>
-              <span>Restaure a luz da floresta aos poucos</span>
-            </div>
-            <div class="instruction-item">
-              <span class="key-badge">💎 3 Segredos</span>
-              <span>Descubra caminhos ocultos e fendas mágicas</span>
-            </div>
-            <div class="instruction-item">
-              <span class="key-badge">🗿 Monólitos</span>
-              <span>Checkpoints luminosos protegem sua jornada</span>
-            </div>
-          </div>
-          <p class="cozy-tip">💡 Dica: Cogumelos gigantes são elásticos! Pule sobre eles para alcançar plataformas mais altas.</p>
-        </div>
-        <button id="btn-close-story" class="btn-primary modal-close-btn">Entendido</button>
-      </div>
-    </div>
-
-    <!-- Settings Modal -->
-    <div id="settings-modal" class="modal-overlay hidden">
-      <div class="modal-card settings-card">
-        <h3 class="modal-title">Configurações & Acessibilidade</h3>
-        <div class="modal-body settings-grid">
-          <div class="setting-row">
-            <label for="slider-music">Música Ambiente</label>
-            <div class="slider-container">
-              <input type="range" id="slider-music" min="0" max="100" value="70">
-              <span id="label-music" class="setting-val">70%</span>
-            </div>
-          </div>
-
-          <div class="setting-row">
-            <label for="slider-sfx">Efeitos Sonoros</label>
-            <div class="slider-container">
-              <input type="range" id="slider-sfx" min="0" max="100" value="85">
-              <span id="label-sfx" class="setting-val">85%</span>
-            </div>
-          </div>
-
-          <div class="setting-row toggle-row">
-            <label for="toggle-screen-shake">Tremor de Tela (Screen Shake)</label>
-            <input type="checkbox" id="toggle-screen-shake" checked class="custom-toggle">
-          </div>
-
-          <div class="setting-row toggle-row">
-            <label for="toggle-reduce-motion">Reduzir Movimento</label>
-            <input type="checkbox" id="toggle-reduce-motion" class="custom-toggle">
-          </div>
-
-          <div class="setting-row">
-            <label for="select-particles">Densidade de Partículas</label>
-            <select id="select-particles" class="custom-select">
-              <option value="low">Baixa</option>
-              <option value="medium">Média</option>
-              <option value="high" selected>Alta</option>
-            </select>
-          </div>
-
-          <div class="setting-row toggle-row">
-            <label for="toggle-high-contrast">Alto Contraste de Colecionáveis</label>
-            <input type="checkbox" id="toggle-high-contrast" class="custom-toggle">
-          </div>
-        </div>
-        <div class="modal-actions">
-          <button id="btn-close-settings" class="btn-primary modal-close-btn">Salvar & Fechar</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Victory / Ending Screen -->
-    <div id="ending-screen" class="screen-overlay hidden">
-      <div class="ending-card">
-        <div class="ending-glow-header">
-          <span class="subtle-quote">"The forest remembers its light."</span>
-          <h2 class="ending-title">Lunara: As Estrelas Perdidas</h2>
-        </div>
-
-        <div class="ending-stats">
-          <div class="stat-box">
-            <svg class="stat-icon star-icon" viewBox="0 0 24 24"><path d="M12 2l2.9 6.6 7.1.6-5.3 4.8 1.6 7-6.3-3.7-6.3 3.7 1.6-7-5.3-4.8 7.1-.6z" fill="#ffd15c"/></svg>
-            <span class="stat-label">Estrelas encontradas:</span>
-            <span id="end-stars-score" class="stat-value">20 / 20</span>
-          </div>
-          <div class="stat-box">
-            <svg class="stat-icon diamond-icon" viewBox="0 0 24 24"><path d="M12 2L3 9l9 13 9-13-9-7z" fill="#d38fff"/></svg>
-            <span class="stat-label">Estrelas secretas:</span>
-            <span id="end-secrets-score" class="stat-value">3 / 3</span>
-          </div>
-        </div>
-
-        <p class="ending-message" id="ending-message-text">Com a luz recuperada, a Árvore Ancestral floresce em harmonia celestial e o céu noturno brilha eternamente.</p>
-
-        <div class="ending-actions">
-          <button id="btn-replay" class="btn-primary">
-            <span class="btn-text">Jogar Novamente</span>
-          </button>
-          <button id="btn-explore-forest" class="btn-secondary">
-            <span class="btn-text">Continuar Explorando</span>
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Screen Transition Curtain -->
-    <div id="fade-curtain" class="fade-curtain"></div>
-  </div>
-
-  <!-- Modular Scripts in order of dependency -->
-  <script src="js/config.js"></script>
-  <script src="js/audio.js"></script>
-  <script src="js/camera.js"></script>
-  <script src="js/particles.js"></script>
-  <script src="js/collectibles.js"></script>
-  <script src="js/checkpoint.js"></script>
-  <script src="js/player.js"></script>
-  <script src="js/level.js"></script>
-  <script src="js/world.js"></script>
-  <script src="js/ui.js"></script>
-  <script src="js/game.js"></script>
-</body>
-</html>
+<main id="game-container">
+<canvas id="gameCanvas" aria-label="Cenário de Lunara. Use os controles descritos em Como jogar."></canvas>
+<div id="hud" class="hidden">
+ <div class="hud-stars"><span class="hud-pill" aria-label="Fragmentos desta fase"><span class="gold" aria-hidden="true">★</span><span id="star-count-text">0 / 5</span></span><span class="hud-pill" aria-label="Memória desta fase"><span class="violet" aria-hidden="true">◆</span><span id="secret-count-text">0 / 1</span></span></div>
+ <div class="hud-controls"><button id="power-status" class="hud-btn" aria-label="Ativar poder estelar" disabled>✦<span id="power-dots" aria-hidden="true"></span></button><button id="btn-sound-toggle" class="hud-btn" aria-label="Silenciar áudio" aria-pressed="false">♫</button><button id="btn-settings-toggle" class="hud-btn" aria-label="Pausar jogo">⏸</button></div>
+</div>
+<div id="touch-controls" class="hidden">
+ <div class="touch-group"><button id="btn-touch-left" aria-label="Mover para esquerda">◀</button><button id="btn-touch-right" aria-label="Mover para direita">▶</button></div>
+ <button id="btn-touch-jump" aria-label="Pular">↑</button>
+</div>
+<section id="title-screen" class="screen-overlay active" aria-labelledby="menu-title">
+ <div class="title-content"><p class="eyebrow">UMA JORNADA PARA REACENDER O CÉU</p><div class="title-emblem" aria-hidden="true">✦</div><h1 id="menu-title" class="game-title">Lunara</h1><h2 class="game-subtitle">As Estrelas Perdidas</h2><p class="tagline">Uma pequena guardiã.<br>Seis caminhos. Um céu para reconstruir.</p>
+ <div class="title-actions"><button id="btn-continue" class="btn-primary hidden">Continuar jornada</button><button id="btn-play" class="btn-primary">Começar jornada</button><button id="btn-map" class="btn-secondary">Capítulos</button><div class="menu-links"><button id="btn-open-story" class="btn-tertiary">Como jogar</button><button id="btn-open-settings" class="btn-tertiary">Configurações</button></div></div>
+ <p id="menu-progress" class="small-note">Uma aventura sem pressa. Nenhuma vida para perder.</p></div>
+</section>
+<section id="dialog-screen" class="screen-overlay hidden" aria-labelledby="dialog-title">
+ <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="dialog-title"><p id="dialog-eyebrow" class="eyebrow"></p><h2 id="dialog-title"></h2><div id="dialog-body"></div><div id="dialog-actions" class="title-actions"></div></div>
+</section>
+<section id="settings-modal" class="screen-overlay hidden" aria-labelledby="settings-title">
+ <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="settings-title"><p class="eyebrow">NO SEU RITMO</p><h2 id="settings-title">Configurações</h2><div class="settings-grid">
+ <div class="setting-row"><label for="slider-music">Música</label><input id="slider-music" type="range" min="0" max="100" value="70"><output id="label-music" for="slider-music">70%</output></div>
+ <div class="setting-row"><label for="slider-sfx">Efeitos sonoros</label><input id="slider-sfx" type="range" min="0" max="100" value="85"><output id="label-sfx" for="slider-sfx">85%</output></div>
+ <div class="setting-row"><label for="toggle-screen-shake">Tremor de tela</label><input id="toggle-screen-shake" type="checkbox" checked></div>
+ <div class="setting-row"><label for="toggle-reduce-motion">Reduzir movimento</label><input id="toggle-reduce-motion" type="checkbox"></div>
+ <div class="setting-row"><label for="select-particles">Partículas</label><select id="select-particles"><option value="low">Poucas</option><option value="medium">Médias</option><option value="high">Muitas</option></select></div>
+ <div class="setting-row"><label for="toggle-high-contrast">Destacar fragmentos</label><input id="toggle-high-contrast" type="checkbox"></div>
+ <div class="setting-row"><label for="toggle-touch">Mostrar controles na tela</label><input id="toggle-touch" type="checkbox"></div>
+ </div><button id="btn-close-settings" class="btn-primary">Salvar e voltar</button></div>
+</section>
+<div id="fade-curtain" aria-hidden="true"></div>
+</main>
+<script src="js/config.js"></script><script src="js/audio.js"></script><script src="js/camera.js"></script><script src="js/particles.js"></script><script src="js/collectibles.js"></script><script src="js/checkpoint.js"></script><script src="js/player.js"></script><script src="js/level.js"></script><script src="js/campaign.js"></script><script src="js/world.js"></script><script src="js/ui.js"></script><script src="js/game.js"></script>
+</body></html>
